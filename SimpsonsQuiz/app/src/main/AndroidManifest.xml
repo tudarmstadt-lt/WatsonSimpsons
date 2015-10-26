@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.tudarmstadt.lt.simpsonsQuiz"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name="de.tudarmstadt.lt.simpsonsQuiz.SimpsonsQuizApp"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name="de.tudarmstadt.lt.simpsonsQuiz.QAActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/qaActivity_header"
+            android:noHistory="true"
+            android:parentActivityName="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Simpsons" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity" />
+        </activity>
+        <activity
+            android:name="de.tudarmstadt.lt.simpsonsQuiz.ReviewActivity"
+            android:label="@string/title_activity_quiz"
+            android:parentActivityName="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Simpsons" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity" />
+        </activity>
+        <activity
+            android:name="de.tudarmstadt.lt.simpsonsQuiz.CreateQuestionActivity"
+            android:label="@string/title_activity_create_question"
+            android:noHistory="true"
+            android:parentActivityName="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Simpsons" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity" />
+        </activity>
+        <activity
+            android:name="de.tudarmstadt.lt.simpsonsQuiz.LoginRegisterActivity"
+            android:label="@string/title_activity_quiz"
+            android:noHistory="true"
+            android:theme="@style/Theme.Simpsons" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity"
+            android:label="@string/title_activity_select_category"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Simpsons" >
+        </activity>
+        <activity
+            android:name="de.tudarmstadt.lt.simpsonsQuiz.QuizGameActivity"
+            android:label="@string/title_activity_quiz_game"
+            android:noHistory="true"
+            android:parentActivityName="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Simpsons" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity" />
+        </activity>
+        <activity
+            android:name="de.tudarmstadt.lt.simpsonsQuiz.QuizGameMPActivity"
+            android:label="@string/title_activity_quiz_game_mp"
+            android:noHistory="true"
+            android:parentActivityName="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Simpsons" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity" />
+        </activity>
+        <activity
+            android:name="de.tudarmstadt.lt.simpsonsQuiz.HighscoreActivity"
+            android:label="@string/title_activity_highscore"
+            android:parentActivityName="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Simpsons"
+            android:noHistory="true" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity" />
+        </activity>
+    </application>
+
+</manifest>

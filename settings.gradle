@@ -1,0 +1,4 @@
+include ':app'
+
+include ':JWatson', ':AnswerProcessing', ':QuizBackend', ':SimpsonsQuizWeb'
+

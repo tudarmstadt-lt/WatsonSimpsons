@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/questionText"
+        android:layout_gravity="center_horizontal"
+        android:autoText="true"
+        android:textSize="26sp"
+        android:imeOptions="actionSend"
+        android:inputType="textCapSentences"
+        android:hint="@string/enter_question_hint"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_text"
+        android:id="@+id/btn_qa_ask_watson"
+        android:layout_gravity="center_horizontal"
+        android:onClick="askWatson" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10pt"
+        android:layout_gravity="center_horizontal"/>
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:padding="10dip">
+
+        <uk.co.deanwild.flowtextview.FlowTextView
+            android:id="@+id/answerTextViewBody"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp">
+
+
+            <ImageView
+                android:layout_height="@android:dimen/thumbnail_height"
+                android:layout_width="@android:dimen/thumbnail_width"
+                android:id="@+id/answerImage"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/answerTextViewHeader"
+                android:textSize="30sp"
+                android:gravity="top"
+                android:layout_toRightOf="@id/answerImage"/>
+
+        </uk.co.deanwild.flowtextview.FlowTextView>
+
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/answerTextViewBodyDebug"
+        android:textStyle="italic"
+        android:textSize="15sp"
+        android:autoLink="web"
+        android:layout_gravity="center_horizontal"
+        android:gravity="right" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_next"
+            android:id="@+id/btn_qa_next_answer"
+            android:layout_gravity="center_horizontal"
+            android:onClick="nextAnswer" />
+    </LinearLayout>
+
+</LinearLayout>
+

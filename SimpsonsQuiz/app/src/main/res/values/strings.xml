@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">simpsonsQuiz</string>
+    <string name="button_text">Ask Watson!</string>
+    <string name="text_enterquestion">Enter Question:</string>
+    <string name="text_vieweranswer">View Answer:</string>
+    <string name="qaActivity_header"><![CDATA[Simpsons Q&A]]></string>
+    <string name="button_next">Next Answer</string>
+    <string name="action_settings">Settings</string>
+    <string name="enter_question_hint">Enter a Question ...</string>
+    <string name="showScores">Show Scores</string>
+    <string name="title_activity_quiz">Simpsons Quiz</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_question">Create Question</string>
+    <string name="enter_question">Enter a Question:</string>
+    <string name="generate_answers">Generate Answers</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_question">Create Question</string>
+    <string name="select_category">Select Category</string>
+    <string name="ok">OK</string>
+    <string name="review_question">Review the Question</string>
+    <string name="new_question">Next Question</string>
+    <string name="switch_category">Back to Start</string>
+    <string name="correct_answer">The answer was correct!</string>
+    <string name="wrong_answer">The answer was wrong...</string>
+    <string name="loading_question">Loading Questions...</string>
+    <string name="submit_rating">Submit Review</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_answers_info_text">Click an item long to mark it as correct answer, click it short to mark it as wrong answer</string>
+    <string name="add_individual_answer">Enter an individual answer:</string>
+    <string name="question_created_feedback">Successfully Created Question. What\'s next?</string>
+    <string name="create_new_question">Create New Question</string>
+    <string name="nav_to_start">Startpage</string>
+    <string name="title_activity_login_register">Simpsons Quiz</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="welcome">Welcome to Simpsons Quiz!</string>
+    <string name="login_or_register">Please login or create a new account.</string>
+    <string name="enter_username">Enter your username:</string>
+    <string name="enter_password">Enter your password:</string>
+    <string name="enter_email">Enter your email address:</string>
+    <string name="title_activity_select_category">Simpsons Quiz</string>
+    <string name="new_quiz_game">Start new Quiz Game</string>
+    <string name="apiKey">api_key</string>
+    <string name="userName">user_name</string>
+    <string name="title_activity_quiz_game">Simpsons Quiz</string>
+    <string name="showEnterQuestion">Add Question</string>
+    <string name="showQA">Ask Watson</string>
+    <string name="logout">Logout</string>
+    <string name="quiz_game_congrats">Congratulations, you finished the Quiz!</string>
+    <string name="new_game">New Game</string>
+    <string name="error_registration">Error during registration: Maybe the username is already taken. Please try again.</string>
+    <string name="error_login">Error during Login: Maybe your credentials are invalid. Please try again.</string>
+    <string name="enter_question_hint_cat">Please select one or more categories</string>
+    <string name="enter_question_hint_answer_selection">Please select one correct and three wrong answers!</string>
+    <string name="quiz_no_further_questions">There are no further questions to review!</string>
+    <string name="qa_error_try_again">Sorry, an error has occurred! Please try again.</string>
+    <string name="new_quiz_game_mp">Start new 2 Player Game</string>
+    <string name="approve_new_questions">Review new Questions</string>
+    <string name="title_activity_quiz_game_mp">Simpsons Quiz</string>
+    <string name="quiz_feedback_right_answer">The green marked answer was the correct answer to the question.</string>
+    <string name="quiz_feedback_distractors">The distractors (wrong answers) were wisely chosen.</string>
+    <string name="quiz_feedback_difficulty">How difficult was the question to answer?</string>
+    <string name="enter_question_hint_enter_question">Please enter a question</string>
+    <string name="quiz_feedback_question_formulation">The question was formulated well.</string>
+    <string name="title_activity_highscore">Highscore</string>
+    <string name="no_internet_connection">No Internet Connection! Please connect.</string>
+    <string name="question_successfully_created">Question successfully created</string>
+
+    <!-- Help text -->
+    <string name="help_sp">Single Player Game</string>
+    <string name="help_sp_text">A single player game contains 9 questions of ascending difficulty. Each question has four possible answers, from which one is correct and three are wrong. Each correctly answered questions scores <b>10 points</b>. If the answer was wrong or if the timelimit is over, you score <b>0 points</b>.</string>
+    <string name="help_mp">Multi Player Game</string>
+    <string name="help_mp_text">A multi player game contains 9 questions. Before the question can be answered, two big buzzer buttons are displayed. The player who presses his buzzer first can answer the question. If he answered correct, he scores <b>20 points</b>. If the answer was wrong, he score <b>-10 points</b> and the other player gets the chance to answer the question correctly, which gives him a score of <b>15 points</b>.</string>
+    <string name="help_questions">Question Creation</string>
+    <string name="help_questions_text">To create a question, first enter the question text. After clicking on Generate Answers, the app generates some possible answers. With a click on the + symbol you can add your own answer. With a long click you can choose one answer as correct answer for the question. A short click selects an answer as wrong answer (distractor). The question can be created and submitted, if one correct and 3 wrong answers have been selected.</string>
+    <string name="help_review">Question Review</string>
+    <string name="help_review_text">The Question Review gives you the possibility to review questions that have been created by other users. You can review the question by the criteria correctness, quality of the distractors (wrong answers), phrasing and difficulty.</string>
+    <string name="help_score">Highscore</string>
+    <string name="help_score_text">The Highscore shows the most active players in question creation and reviewing. Each accepted answer scores <b>5 points</b>, each submitted review scores <b>1 point</b>.</string>
+    <string name="help_qa">Ask Watson</string>
+    <string name="help_qa_text">In the menu you can select Ask Watson to get a direct answer to a natural language question.</string>
+    <string name="help_qa_">Ask Watson</string>
+    <string name="help_qa_text_">Enter a natural language question and retrieve an answer. Show additional info via Menu->Show Scores.</string>
+
+    <!-- About text -->
+    <string name="about_0">Simpsons Quiz</string>
+    <string name="about_1">Created by</string>
+    <string name="about_2">Daniel Theiß\nTimo Gerecht\nUte Winchenbach\nStefan Bauregger</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
+    <string name="about_3">The Simpsons Quiz was developed as part of the students lab <a href="https://www.lt.informatik.tu-darmstadt.de/de/teaching/lectures-and-classes/summer-term-2015/question-answering-technologies-behind-ibm-watson/">Question Answering Technologies Behind IBM Watson</a> offered by the <a href="http://www.lt.informatik.tu-darmstadt.de/">Language Technology Group at Technische Universität Darmstadt</a> and uses <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/">IBM Watson</a> technology.</string>
+    <string name="about_4">The Simpsons® is a registered trademark of 20th Century Fox.</string>
+    <string name="about_5">Images from <a href="https://simpsonswiki.com/">Wikisimpsons</a>.</string>
+
+    <string name="error_loading_questions">Error while loading the questions. Maybe you have internet connection problems.</string>
+    <string name="error_loading_highscore">Error while loading the highscore. Maybe you have internet connection problems.</string>
+    <string name="error_creating_question">Error while creating the question. Maybe you have internet connection problems.</string>
+    <string name="A">A</string>
+    <string name="B">B</string>
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
+    <string name="saved_question">Saved Question</string>
+    <string name="unknown_question_type">Unknown question type.</string>
+    <string name="no_answers_generated">No answers could be generated.</string>
+    <string name="error_login_guest">Error logging in as guest.</string>
+    <string name="error_watson_init">Error during Watson Initialisation</string>
+    <string name="error_watson_exec">Error during Watson Execution</string>
+</resources>

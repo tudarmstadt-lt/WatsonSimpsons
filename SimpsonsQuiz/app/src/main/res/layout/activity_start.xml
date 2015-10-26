@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.tudarmstadt.lt.simpsonsQuiz.StartPageActivity"
+    android:background="@color/simpsons_blue">
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_centerInParent="true">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView2" >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+            android:id="@+id/cat_new_quiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="clickButton"
+            android:background="@drawable/btn_single_player"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"/>
+
+            <ImageView
+                android:layout_below="@id/cat_new_quiz"
+                android:id="@+id/cat_new_quiz_mp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:background="@drawable/btn_multi_player"
+                android:adjustViewBounds="true"/>
+
+            <ImageView
+                android:id="@+id/add_new_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:background="@drawable/btn_new_question"
+                android:layout_below="@id/cat_new_quiz_mp"
+                android:adjustViewBounds="true"/>
+
+            <ImageView
+                android:id="@+id/approve_new_questions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_review"
+                android:onClick="clickButton"
+                android:layout_below="@id/add_new_question"
+                android:adjustViewBounds="true"
+                android:layout_alignParentLeft="true"/>
+
+            <ImageView
+                android:id="@+id/highscore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_highscore"
+                android:onClick="clickButton"
+                android:layout_toEndOf="@id/approve_new_questions"
+                android:layout_below="@id/add_new_question"
+                android:adjustViewBounds="true"/>
+
+            <ImageView
+                android:id="@+id/help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_help"
+                android:onClick="clickButton"
+                android:layout_toEndOf="@id/approve_new_questions"
+                android:layout_below="@id/highscore"/>
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>
+</RelativeLayout>

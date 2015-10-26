@@ -1,0 +1,14 @@
+include ':app'
+
+include ':JWatson'
+project(':JWatson').projectDir = new File(settingsDir, '../JWatson')
+
+include ':AnswerProcessing'
+project(':AnswerProcessing').projectDir = new File(settingsDir, '../AnswerProcessing')
+
+include ':QuizBackend'
+project(':QuizBackend').projectDir = new File(settingsDir, '../QuizBackend')
+
+include ':SimpsonsQuizWeb'
+project(':SimpsonsQuizWeb').projectDir = new File(settingsDir, '../SimpsonsQuiz-Web')
+

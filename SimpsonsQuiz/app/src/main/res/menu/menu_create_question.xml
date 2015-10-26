@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.tudarmstadt.lt.simpsonsQuiz.CreateQuestionActivity">
+    <item
+        android:id="@+id/help"
+        android:title="@string/help"
+        />
+    <item
+        android:id="@+id/about"
+        android:title="@string/about"
+        />
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        />
+</menu>
