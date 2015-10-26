@@ -50,24 +50,24 @@ After installation, you should have all the needed credentials and URLs together
 
 ### Android Application
 
-1. Rename 'java/SimpsonsQuiz/app/src/main/assets/simpsonsquiz_sample.properties' to 'simpsonsquiz.properties'
+1. Rename 'SimpsonsQuiz/app/src/main/assets/simpsonsquiz_sample.properties' to 'simpsonsquiz.properties'
 2. Open the file and enter the credentials and URLs where asked for.
 3. Run
    ```gradlew assembleDebug```
-   in 'java/SimpsonsQuiz'
-4. The builded .apk file can be found in 'java/SimpsonsQuiz/app/build/outputs/apk/app-debug.apk'
+   in 'SimpsonsQuiz'
+4. The builded .apk file can be found in 'SimpsonsQuiz/app/build/outputs/apk/app-debug.apk'
 
 ### Web Application
 
-1. Rename 'java/SimpsonsQuiz-Web/conf/credentials_sample.conf' to 'credentials.conf'
+1. Rename 'SimpsonsQuiz-Web/conf/credentials_sample.conf' to 'credentials.conf'
 2. Open the file and enter the credentials and URLs where asked for.
 3. Run
    ```gradle copyJars```
-   in 'java/SimpsonsQuiz' to copy compiled jars into web project
+   in 'SimpsonsQuiz' to copy compiled jars into web project
 4. Run
    ```sbt dist```
-   in 'java/SimpsonsQuiz-Web' for packaging
-5. The packaged zip can be found in 'java/SimpsonsQuiz-Web/target/universal/'
+   in 'SimpsonsQuiz-Web' for packaging
+5. The packaged zip can be found in 'SimpsonsQuiz-Web/target/universal/'
 6. The executable can be found in the bin-folder of the extracted zip
 #### for Linux only:
 7. Make 'simpsonsquiz-web-1.0/bin/simpsonsquiz-web' executable with
