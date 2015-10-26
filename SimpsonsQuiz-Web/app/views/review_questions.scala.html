@@ -1,0 +1,124 @@
+@(user: models.User)
+
+<!DOCTYPE html>
+
+@import helper._
+
+@questionFieldConstructor = @{
+FieldConstructor(fieldConstructor.questionInputFieldConstructor.render)
+}
+@selectFieldConstructor = @{
+FieldConstructor(fieldConstructor.answerNumberSelectFieldConstructor.render)
+}
+@selectDocumentsFieldConstructor = @{
+FieldConstructor(fieldConstructor.answerNumberSelectFieldConstructor.render)
+}
+
+<html>
+<head>
+    <title>Simpsons Quiz - Review Question</title>
+    <link rel="stylesheet" href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/quiz.css")'>
+
+</head>
+<body>
+<div class='banner'>
+</div>
+<div class="container main-frame">
+    @displayHeader("Review Questions", "review", user)
+
+        <div id="quizquestion-box" class="panel panel-default">
+            <div id="question" class="panel-heading">
+                <p id="question-text">Loading Question...</p>
+            </div>
+            <div id="answers" class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" id="answer1" class="btn btn-default btn-lg btn-block">Answer 1</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" id="answer2" class="btn btn-default btn-lg btn-block">Answer 2</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" id="answer3" class="btn btn-default btn-lg btn-block">Answer 3</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" id="answer4" class="btn btn-default btn-lg btn-block">Answer 4</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="questionreview-box" class="panel panel-default">
+            <form class="form-horizontal">
+                <div class="panel-heading row">
+                    <h2 class="col-md-6">Review the Question</h2>
+                    <div id="review-alert" class="col-md-6 alert" role="alert"></div>
+                </div>
+                <fieldset class="panel-body">
+
+                    <!-- Multiple Checkboxes -->
+                    <div class="form-group" id="checkboxGroup">
+                        <label class="col-md-4 control-label" for="checkboxGroup">Was the question formulated well and
+                            answered correctly?</label>
+
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label for="checkboxGroup-0">
+                                    <input type="checkbox" name="checkboxGroup" id="checkboxGroup-0" value="1">
+                                    The green marked answer was the correct answer to the question
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label for="checkboxGroup-1">
+                                    <input type="checkbox" name="checkboxGroup" id="checkboxGroup-1" value="2">
+                                    The distractors (wrong answers) were wisely chosen
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label for="checkboxGroup-2">
+                                    <input type="checkbox" name="checkboxGroup" id="checkboxGroup-2" value="3">
+                                    The question was formulated well
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="difficultySelector">How difficult was the question to
+                            answer?</label>
+
+                        <div class="col-md-4">
+                            <select id="difficultySelector" name="difficultySelector" class="form-control">
+                                <option value="1">very easy</option>
+                                <option value="3">easy</option>
+                                <option value="5">medium</option>
+                                <option value="7">hard</option>
+                                <option value="9">very hard</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="button-wrapper row" id="buttonContainer">
+            <div class="col-md-6 col-md-offset-3">
+                <button type="button" id="submitandnextquestion" class="btn btn-primary btn-lg btn-block">Submit Review and load next Question <i
+                        class="glyphicon glyphicon-chevron-right"></i></button>
+                <button type="button" id="nextquestion" class="btn btn-default btn-lg btn-block">Skip this Question <i
+                        class="glyphicon glyphicon-forward"></i></button>
+            </div>
+        </div>
+    @displayFooter()
+</div>
+
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+    <script type="text/javascript" src='@routes.Application.javascriptRoutes()'></script>
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/review.js")'></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+@(signupForm: Form[models.Register])
+
+@import helper._
+
+@form(routes.Signup.save(), 'class -> "form") {
+
+    @if(signupForm.hasGlobalErrors) {
+        <p class="error">
+            <span class="label label-danger">@signupForm.globalError.message</span>
+        </p>
+    }
+
+    <fieldset>
+        @inputText(
+            signupForm("username"),
+            'placeholder -> Messages("username"),
+            '_label -> null,
+            'class -> "form-control",
+            '_showConstraints -> false
+        )
+        @inputPassword(
+            signupForm("inputPassword"),
+            '_label -> null,
+            'placeholder -> Messages("password"),
+            'class -> "form-control",
+            '_showConstraints -> false
+        )
+    </fieldset>
+
+    <div class="form-actions">
+        <input type="submit" class="btn btn-info btn-block" value='@Messages("signup.signup")'>
+    </div>
+}

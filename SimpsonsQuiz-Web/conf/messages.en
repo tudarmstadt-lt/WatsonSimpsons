@@ -1,0 +1,40 @@
+username=Sample User
+password=Password
+error.technical=Technical Error, please Retry
+error.noquestion=A question is required
+
+invalid.user.or.password=Invalid user or password or connection lost
+youve.been.logged.out=You've been logged out
+
+signin.signin=Sign In
+signup.signup=Yes please, register now!
+signin.your.username=Your username
+signin.your.password=Your password
+
+createquestion.question.placeholder=Type your question here
+createquestion.question=Question
+createquestion.numberOfAnswer=Answer#
+createquestion.numberOfWatsonDocuments=Documents#
+createquestion.category=Category
+
+help.game=Quiz Game
+help.sp=Single Player Game
+help.sp.text=A single player game contains 9 questions of ascending difficulty. Each question has four possible answers, from which one is correct and three are wrong. Each correctly answered question scores 
+help.sp.text2=. If the answer was wrong or if the timelimit is over, you score 
+points=points
+help.mp=Multi Player Game
+help.mp.text=A multi player game contains 9 questions. Before a question can be answered, the players need to press a key. The player who presses his key first can answer the question. If he answered correctly, he scores  
+help.mp.text2=If the answer was wrong, he scores 
+help.mp.text3=and the other player gets the chance to answer the question correctly, which gives him a score of 
+help.questions=Question Creation
+help.questions.text=To create a question, first enter the question text. After clicking on the ''Ask!''-Button, the application generates some possible answers. With a click on the ''+'' symbol you can add your own answer. By clicking ''Right-'' or ''Wrong Answer''-Buttons you can choose one answer as correct and three as false answers for the question. The question can then be created and submitted.
+help.review=Question Review
+help.review.text=The Question Review gives you the possibility to review questions that have been created by other users. You can review the question by the criteria correctness, quality of the distractors (wrong answers), phrasing and difficulty.
+help.score=Highscore
+help.score.text=The Highscore shows the most active users in question creation and reviewing. Each accepted answer scores
+help.score.text2=each submitted review scores
+help.qa=Ask Watson
+help.qa.text=You can ask a natural language question and receive a direct answer.
+
+qa.noConnection=Connection lost, please try again later.
+qa.noAnswer=D''Oh! Watson has no answers.

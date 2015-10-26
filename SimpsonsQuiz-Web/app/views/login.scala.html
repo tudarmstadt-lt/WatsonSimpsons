@@ -1,0 +1,41 @@
+@(loginForm: Form[models.Login])
+
+@import helper._
+
+<h3>@Messages("signin.signin")</h3>
+
+<p>Fill out the form below to login. You can also use the shared guest account
+    to test the service. Feel free to create your own account.</p>
+
+@form(routes.Application.authenticate(), 'class -> "form") {
+
+    @if(loginForm.hasGlobalErrors) {
+        <p class="error">
+            <span class="label label-danger">@loginForm.globalError.message</span>
+        </p>
+    }
+
+    <fieldset>
+        @inputText(
+            loginForm("username"),
+            'placeholder -> Messages("username"),
+            '_label -> null,
+            '_help -> Messages("signin.your.username"),
+            'class -> "form-control"
+        )
+        @inputPassword(
+            loginForm("password"),
+            '_label -> null,
+            'placeholder -> Messages("password"),
+            '_help -> Messages("signin.your.password"),
+            'class -> "form-control"
+        )
+    </fieldset>
+
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value='@Messages("signin.signin")'>
+        
+        <button class="btn btn-primary" type="button" onClick="location.href='/loginGuest'">Login as guest</button>
+        
+    </div>
+}

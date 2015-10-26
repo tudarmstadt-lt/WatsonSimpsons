@@ -1,0 +1,12 @@
+@(elements: helper.FieldElements)
+
+<div class="form-group">
+    <label>@elements.label:</label>
+    <div class="input-group">
+        <!-- Hack for not aligned input with button -->
+        <div style="margin-top: 8px;">@elements.input</div>
+        <span class="input-group-btn">
+            <button id="ask-button" class="btn btn-primary" type="submit">Ask!</button>
+        </span>
+    </div>
+</div>

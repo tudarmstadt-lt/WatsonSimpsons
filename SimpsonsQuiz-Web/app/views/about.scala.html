@@ -1,0 +1,32 @@
+@(user: models.User)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Simpsons Quiz - About</title>
+    <link rel="stylesheet" href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+</head>
+<body>
+<div class='banner'>
+</div>
+<div class="container main-frame form-inline">
+    @displayHeader("About the Simpsons Quiz", "about", user)
+
+    <div>
+        <p>The <strong>Simpsons Quiz</strong> was developed as part of the students lab
+            <a href="https://www.lt.informatik.tu-darmstadt.de/de/teaching/lectures-and-classes/summer-term-2015/question-answering-technologies-behind-ibm-watson/" target="_blank"><em>Question Answering Technologies Behind
+            IBM Watson</em></a><br>offered by the <a href="http://www.lt.informatik.tu-darmstadt.de" target="_blank">
+            Language Technology Group at Technische Universit&auml;t Darmstadt</a> and uses <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/" target="_blank">IBM Watson</a> technology.</p>
+        <p>It was created in 2015 by Stefan Bauregger, Timo Gerecht, Daniel Thei&szlig; and Ute Winchenbach.</p>
+        <p>The Simpsons&reg; is a registered trademark of 20th Century Fox.</p>
+        <p>Images from <a href="https://simpsonswiki.com/" target="_blank">Wikisimpsons</a>.</p>
+    </div>
+    @displayFooter()
+</div>
+<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+
+</body>
+</html>

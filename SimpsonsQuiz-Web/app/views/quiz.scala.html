@@ -1,0 +1,115 @@
+@(user: models.User)
+
+<!DOCTYPE html>
+
+@import helper._
+
+@questionFieldConstructor = @{
+FieldConstructor(fieldConstructor.questionInputFieldConstructor.render)
+}
+@selectFieldConstructor = @{
+FieldConstructor(fieldConstructor.answerNumberSelectFieldConstructor.render)
+}
+@selectDocumentsFieldConstructor = @{
+FieldConstructor(fieldConstructor.answerNumberSelectFieldConstructor.render)
+}
+
+<html>
+<head>
+    <title>Simpsons Quiz - Game</title>
+    <link rel="stylesheet" href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/quiz.css")'>
+
+</head>
+<body>
+<div class='banner'>
+</div>
+<div class="container main-frame">
+    @displayHeader("Simpsons Quiz", "quiz", user)
+
+    <div id="quiz-startpage" class="quizpage">
+        <div class="row">
+            <div id="game-intro-sp" class="col-md-6 game-intro">
+            <h2>Single Player</h2>
+                <p>Test your Simpsons knowledge and play alone.</p>
+                <p>For each correct answered question you score <strong>10</strong> points.</p>
+            </div>
+            <div id="game-intro-mp" class="col-md-6 game-intro">
+                <h2>Multi Player</h2>
+                <p>Test your Simpsons knowledge and compete with your friend in a local duell.</p>
+                <p>If you know the answer buzz by pressing a key! (Player A with <kbd>S</kbd>, Player B with <kbd>K</kbd>)</p>
+                <p>For a correct answer you score <strong>20</strong> points but consider: if your answer is wrong, you will loose <strong>10</strong> points!</p>
+                <p>If your friend's answer was wrong, you get the chance to give the right answer for which you will earn <strong>15</strong> points without the risk of losing any points!</p>
+            </div>
+        </div>
+        <div id="startbuttons-wrapper" class="row">
+            <div class="col-md-6"><button type="button" id="startgame-sp" class="btn btn-primary btn-lg btn-block">Start Quiz Single Player</button></div>
+            <div class="col-md-6"><button type="button" id="startgame-mp" class="btn btn-primary btn-lg btn-block">Start Quiz Multi Player</button></div>
+        </div>
+    </div>
+    <div id="quiz-gamepage" class="quizpage">
+        <div id="game-info" class="row">
+            <div id="playerA-info" class="col-md-2 player-info mp">
+                <div class="player-name"><i class="glyphicon glyphicon-user"></i> Player A</div>
+                <div id="playerA-score" class="player-score">0</div>
+            </div>
+            <div id="game-message" class="col-md-8">
+                <p id="buzz-info">It's <strong id="player-name">Player A</strong>'s turn!</p>
+            </div>
+            <div id="playerB-info" class="col-md-2 player-info mp">
+                <div class="player-name"><i class="glyphicon glyphicon-user"></i> Player B</div>
+                <div id="playerB-score" class="player-score">0</div>
+            </div>
+            <div id="playerS-info" class="col-md-2 col-md-offset-2 player-info sp">
+                <div class="player-name"><i class="glyphicon glyphicon-user"></i> Single Player</div>
+                <div id="playerS-score" class="player-score">0</div>
+            </div>
+        </div>
+        <div id="quiz-gameplay">
+            <div id="quiz-timer" class="progress">
+                <div id="progress-timer" class="progress-bar11"></div>
+            </div>
+
+            <div id="quizquestion-box" class="panel panel-default">
+                <div id="question" class="panel-heading">
+                    <p id="question-text">Loading Question...</p>
+                </div>
+                <div id="answers" class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6"><button type="button" id="answer1" class="btn btn-default btn-lg btn-block">Answer 1</button></div>
+                        <div class="col-md-6"><button type="button" id="answer2" class="btn btn-default btn-lg btn-block">Answer 2</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6"><button type="button" id="answer3" class="btn btn-default btn-lg btn-block">Answer 3</button></div>
+                        <div class="col-md-6"><button type="button" id="answer4" class="btn btn-default btn-lg btn-block">Answer 4</button></div>
+                    </div>
+                    <button type="button" id="no-answer" class="btn hidden"></button>
+                </div>
+            </div>
+            <div class="container button-wrapper">
+                <div class="col-md-6 col-md-offset-3"><button type="button" id="nextquestion" class="btn btn-primary btn-lg btn-block">Next Question <i class="glyphicon glyphicon-chevron-right"></i></button></div>
+            </div>
+            <div class="container mp" id="mp-info">
+                <p class="text-center">Player A buzz with <kbd>S</kbd> and Player B buzz with <kbd>K</kbd>.</p>
+            </div>
+        </div>
+        <div id="quiz-finish-info" class="text-center">
+            <h2>You finished the Quiz!</h2>
+            <h3 id="game-result"></h3>
+            <div class="container button-wrapper">
+                <div class="col-md-6 col-md-offset-3"><a href="/quiz"><button type="button" id="newgame" class="btn btn-primary btn-lg btn-block">New Game <i class="glyphicon glyphicon-play"></i></button></a></div>
+            </div>
+
+        </div>
+    </div>
+    @displayFooter()
+</div>
+
+<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+<script type="text/javascript" src='@routes.Application.javascriptRoutes()'></script>
+<script type='text/javascript' src='@routes.Assets.at("javascripts/quiz.js")'></script>
+
+</body>
+</html>

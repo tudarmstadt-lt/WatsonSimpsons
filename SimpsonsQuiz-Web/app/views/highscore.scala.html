@@ -1,0 +1,54 @@
+@(currentuser: models.User, highscore: models.Highscore)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Simpsons Quiz - Highscore</title>
+    <link rel="stylesheet" href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/quiz.css")'>
+
+</head>
+<body>
+<div class='banner'>
+</div>
+<div class="container main-frame">
+    @displayHeader("Highscore", "highscore", currentuser)
+
+    <div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+
+            <!-- Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                @import java.math.BigInteger; var i=0
+                @for(user <- highscore.highscore){
+                    @(i+=1)
+                    @if(currentuser.username == user.getUsername()){
+                        <tr class="own-highscore">
+                    } else {<tr>}
+                        <td>@i</td>
+                        <td>@user.getUsername()</td>
+                        <td>@user.getScore()</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @displayFooter()
+</div>
+
+<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+</body>
+</html>

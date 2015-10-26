@@ -1,0 +1,26 @@
+@(title: String, current: String, user: models.User)
+
+<div class="menu-box row">
+    <nav class="col-md-8" role="navigation">
+        <ul class="nav nav-pills">
+            @if(current == "home") {<li class="active">} else {<li>}<a href="@routes.Application.home()"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+            @if(current == "quiz") {<li class="active">} else {<li>}<a href="@routes.Quiz.index()"><i class="glyphicon glyphicon-play"></i> Play Quiz</a></li>
+            @if(current == "addquestion") {<li class="active">} else {<li>}<a href="@routes.CreateQuestion.index()"><i class="glyphicon glyphicon-pencil"></i> Add Question</a></li>
+            @if(current == "review") {<li class="active">} else {<li>}<a href="@routes.ReviewQuestions.index()"><i class="glyphicon glyphicon-check"></i> Review Questions</a></li>
+            @if(current == "highscore") {<li class="active">} else {<li>}<a href="@routes.Highscore.index()"><i class="glyphicon glyphicon-stats"></i> Highscore</a></li>
+            @if(current == "qa") {<li class="active">} else {<li>}<a href="@routes.QA.index()"><i class="glyphicon glyphicon-cloud"></i> Ask Watson</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="col-md-4 menu-info pull-right">
+        <div class="pull-right">
+            <span class="user-name"><i class="glyphicon glyphicon-user"></i> <strong>@user.username</strong></span>
+            <span class="user-score">Your Score: <strong id="user-score-value">@models.Highscore.getScore(user.apiKey)</strong></span>
+            <span class="user-logout"><a class="pull-right1" href="@routes.Application.logout()"><i class="glyphicon glyphicon-log-out"></i> Logout</a></span>
+        </div>
+    </div>
+</div>
+<div class="page-header">
+    <h1>@title</h1>
+</div>

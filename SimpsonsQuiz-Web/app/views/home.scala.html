@@ -1,0 +1,55 @@
+@(user: models.User)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Simpsons Quiz - Home</title>
+    <link rel="stylesheet" href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+</head>
+<body>
+<div class='banner'>
+</div>
+<div class="container main-frame form-inline">
+    @displayHeader("Welcome to the Simpsons Quiz!", "home", user)
+<div class="row">
+<div class="col-md-9 homepage">
+    <a href="@routes.Quiz.index()"><h3>@Messages("help.game")</h3></a>
+    <h4>@Messages("help.sp")</h4>
+    <p>@Messages("help.sp.text")
+    <b>10&nbsp;points</b>
+    @Messages("help.sp.text2")
+    <b>0&nbsp;points</b>.</p>
+    <h4>@Messages("help.mp")</h4>
+    <p>@Messages("help.mp.text")
+    <b>20&nbsp;points</b>.
+    @Messages("help.mp.text2")
+    <b>-10&nbsp;points</b>
+    @Messages("help.mp.text3")
+    <b>15&nbsp;points</b>.</p>
+
+    <a href="@routes.CreateQuestion.index()"><h3>@Messages("help.questions")</h3></a>
+    @Messages("help.questions.text")
+
+    <a href="@routes.ReviewQuestions.index()"><h3>@Messages("help.review")</h3></a>
+    @Messages("help.review.text")
+
+    <a href="@routes.Highscore.index()"><h3>@Messages("help.score")</h3></a>
+    @Messages("help.score.text")
+    <b>5&nbsp;points</b>,
+    @Messages("help.score.text2")
+    <b>1&nbsp;point</b>.
+
+    <a href="@routes.QA.index()"><h3>@Messages("help.qa")</h3></a>
+    @Messages("help.qa.text")
+</div>
+    </div>
+    @displayFooter()
+</div>
+
+<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+
+</body>
+</html>

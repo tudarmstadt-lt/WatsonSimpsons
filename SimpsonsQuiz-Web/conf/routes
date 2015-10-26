@@ -1,0 +1,40 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                                   @controllers.Application.index()
+GET         /home                               @controllers.Application.home()
+GET         /about                              @controllers.Application.about()
+
+
+GET         /quiz                               @controllers.Quiz.index()
+GET         /quiz/next                          @controllers.Quiz.nextQuestion()
+
+GET         /review                             @controllers.ReviewQuestions.index()
+GET         /review/next                        @controllers.ReviewQuestions.nextQuestion()
+POST        /review/submit                      @controllers.ReviewQuestions.submit(id: Int, check0: String, check1: String, check2: String, difficulty: Int)
+
+GET         /highscore                          @controllers.Highscore.index()
+
+GET         /qa                                 @controllers.QA.index()
+
+POST        /login                              @controllers.Application.authenticate()
+GET         /logout                             @controllers.Application.logout()
+GET         /loginGuest                         @controllers.Application.loginAsGuest()
+
+POST        /signup                             @controllers.Signup.save()
+
+GET         /addquestion                        @controllers.CreateQuestion.index()
+GET         /addquestion/question-by-form       @controllers.CreateQuestion.askByForm(isQuiz:Boolean ?= true)
+GET         /qa/question-by-form                @controllers.QA.askByForm(isQuiz:Boolean ?= false)
+
+POST 		/addquestion/send-question		    @controllers.CreateQuestion.saveQuestion()
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                       controllers.Assets.at(path="/public", file)
+GET         /webjars/*file                      controllers.WebJarAssets.at(file)
+
+# Javascript Routes
+GET         /javascriptRoutes                   controllers.Application.javascriptRoutes
+POST        /javascriptRoutes                   controllers.Application.javascriptRoutes

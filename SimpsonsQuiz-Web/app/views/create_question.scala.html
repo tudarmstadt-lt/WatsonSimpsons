@@ -1,0 +1,205 @@
+@(requestForm: Form[models.Request], user: models.User, response: models.Response, saved: Boolean)
+
+<!DOCTYPE html>
+
+@import helper._
+
+@questionFieldConstructor = @{
+    FieldConstructor(fieldConstructor.questionInputFieldConstructor.render)
+}
+@selectFieldConstructor = @{
+    FieldConstructor(fieldConstructor.answerNumberSelectFieldConstructor.render)
+}
+@selectDocumentsFieldConstructor = @{
+    FieldConstructor(fieldConstructor.answerNumberSelectFieldConstructor.render)
+}
+@selectCategoriesFieldConstructor = @{
+    FieldConstructor(fieldConstructor.answerNumberSelectFieldConstructor.render)
+}
+
+<html>
+    <head>
+        <title>Simpsons Quiz - Add Question</title>
+        <link rel="stylesheet" href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+        <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+    </head>
+    <body>
+        <div class='banner'>
+        </div>
+        <div class="container main-frame form-inline">
+            @displayHeader("Add Question", "addquestion", user)
+
+            @if(saved) {
+                <div class="alert alert-success">
+                    <p>Your Question was saved!</p>
+                </div>
+            }
+            <div class="qa-input-box row">
+
+                @form(action = routes.CreateQuestion.askByForm(), 'class -> "form") {
+                    <div class="hidden-form">
+                        <div class="col-md-6">
+                            @select(requestForm("numberOfAnswers"),
+                                options = options(Request.numbersOfAnswers()),
+                                '_label -> "number of answers",
+                                'value -> 15,
+                                'class -> "form-control")(handler = selectFieldConstructor, implicitly[Lang])
+                        </div>
+                        <div class="col-md-6">
+                        @select(requestForm("numberOfWatsonDocuments"),
+                                options = options(Request.numberOfWatsonDocuments()),
+                                '_label -> "Watson Documents used in postprocessing",
+                                'value -> 3,
+                                'class -> "form-control")(handler = selectDocumentsFieldConstructor, implicitly[Lang])
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        @inputText(requestForm("question"),
+                            'placeholder -> Messages("createquestion.question.placeholder"),
+                            '_label -> Messages("createquestion.question"),
+                            '_help -> "",
+                            'size -> "110",
+                            'id -> "watsonquestion",
+                            'class -> "form-control")(handler = questionFieldConstructor, implicitly[Lang])
+
+                    </div>
+                
+                }
+            </div>
+            <div class="results-container">
+            	<div class="loading">
+                    <span class="glyphicon glyphicon-refresh glyphicon-spin"></span>
+                </div>
+                
+
+                @if(!response.getQuizAnswers.isEmpty) {
+                    @form(routes.CreateQuestion.saveQuestion(), 'class -> "form", 'id -> "addQuestionForm") {
+
+                        <div id="info-box" class="alert-info">
+                            <i class="glyphicon glyphicon-info-sign"></i>
+                            <p>Please select <strong>one</strong> as correct answer and <strong>three</strong> as false answers by clicking on the corresponding buttons. For deselection click on the corresponding button again.<br>
+                            By clicking on the button <em>Add Individual Answer</em>, you can add your own answers for selection.</p>
+                        </div>
+                        <ul class="answer-list">
+                        @for((current, index) <- response.getQuizAnswers.zipWithIndex) {
+                            <li id="answer@index">
+                                <div class="row" id="row@index">
+                                    <div class="col-md-3 answer-img">
+                                        <img class="center-block" src="@current.getImage.getThumburl"
+                                             height="@current.getImage.getComputedHeight(150,280)"
+                                             width="@current.getImage.getComputedWidth(150,280)"/>
+                                    </div>
+                                    <div class="col-md-6 answer-content">
+                                        <h3>@current.getAnswer</h3>
+                                        <p>@current.getSentence</p>
+                                    </div>
+                                </div>
+                                <div class="row answer-info">
+                                    <div class="col-md-3 answer-rating">
+                                        <div class="ratings">
+                                            @if(current.getScore()>0.0){
+                                            <strong>Score:</strong>
+                                             <span class="label label-danger"><strong>
+
+                                                 @{"%3.2f".format(current.getScore() * 100 )} %</strong>
+                                             </span>
+                                            }@if(current.getScore()==0.0){
+                                            <strong>Generated</strong>}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 answer-url">
+                                        @if(current.getURL != "") {<a href="@current.getURL" target="_blank">@current.getURL</a>}
+                                    </div>
+                                    @if(!current.getNeTypes.contains("UNKNOWN")) {
+                                    	<div class="col-md-3 answer-buttons">
+                                      	  <input id="color@index" value="white"  type="hidden" autocomplete="off">
+                                       	  <button type="button" class="btn btn-default correct-button" onclick="pressCorrectAnswer(@index,'@current.getAnswer.replace("'", "\\'")', @response.getQuizAnswers.size)">Right Answer</button>
+                                       	  <button type="button" class="btn btn-default false-button" onclick="pressFalseAnswer(@index,'@current.getAnswer.replace("'", "\\'")')">Wrong Answer</button>
+                                    	</div>
+                                    }
+                                </div>
+                            </li>
+
+                            }
+                            
+                            @for(index <- Request.numberOfWatsonDocuments()){
+
+                                <li class="hidden-form" id="rowv@index">
+                                    <div class="row" id="row-@index">
+                                        <div class="col-md-3 answer-img">
+                                                 <img class="center-block" src='@routes.Assets.at("img/homer.png")' height="150" width="120"/>
+                                        </div>
+                                        <div class="col-md-6 answer-content">
+                                                    <h3><input class="form-control input-individual" type="text" id="individual-@index" placeholder="Please enter an answer"></h3>
+                                        </div>
+                                    </div>
+                                    <div class="row answer-info">
+                                        <div class="col-md-3 answer-rating">
+                                            <div class="ratings">
+                                                <strong>Individual</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 answer-url">
+
+                                        </div>
+                                        <div class="col-md-3 answer-buttons">
+                                            <input id="color-@index" value="white" type="hidden" autocomplete="off">
+                                            <button type="button" class="btn btn-default correct-button" onclick="pressCorrectAnswer(-@index,'', @response.getQuizAnswers.size)">Right Answer</button>
+                                            <button type="button" class="btn btn-default false-button" onclick="pressFalseAnswer(-@index,'')">Wrong Answer</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <div class="row addquestion-footer">
+                            <div class="col-md-3">
+                                <div id="message-box" class="alert alert-info"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <button id="saveQuestionButton" class="btn btn-primary btn-block btn-lg" type="submit">Save Question <i class="glyphicon glyphicon-send"></i></button>
+                            </div>
+                            <div class="col-md-3">
+                                <button id="addOwnAnswerButton" class="btn btn-default btn-block btn-lg" type="button"><i class="glyphicon glyphicon-plus"></i> Add Individual Answer</button>
+                            </div>
+
+                            <div class="hidden-form">
+                                @inputText(requestForm("correctAnswer"),
+                    			'id -> "rightAnswer",
+                    			'autocomplete -> "off", 
+								 'type -> "text")
+								 
+                    			@inputText(requestForm("falseAnswer1"),
+                    			'id -> "wrongAnswer1", 
+                    			'autocomplete -> "off", 
+								 'type -> "text")
+								 
+								 @inputText(requestForm("falseAnswer2"),
+                    			'id -> "wrongAnswer2", 
+                    			'autocomplete -> "off", 
+								 'type -> "text")
+								 
+								 @inputText(requestForm("falseAnswer3"),
+                    			'id -> "wrongAnswer3", 
+                    			'autocomplete -> "off", 
+								 'type -> "text")
+								 
+                    			@inputText(requestForm("question"),
+                    			'id -> "questionSend", 
+                    			'autocomplete -> "off", 
+								 'type -> "text")
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+            <div class="results-bottom"></div>
+            @displayFooter()
+        </div>
+
+        <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+        <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+        <script type='text/javascript' src='@routes.Assets.at("javascripts/addQuestion.js")'></script>
+    </body>
+</html>

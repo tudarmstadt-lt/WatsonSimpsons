@@ -1,0 +1,100 @@
+@(requestForm: Form[models.Request], user: models.User, response: models.Response, foundAnswers: Boolean)
+
+<!DOCTYPE html>
+
+@import helper._
+@import answerProcessing.types.QuizAnswer
+
+@questionFieldConstructor = @{
+    FieldConstructor(fieldConstructor.questionInputQAConstructor.render)
+}
+
+<html>
+    <head>
+        <title>Simpsons Quiz - Ask Watson</title>
+        <link rel="stylesheet" href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+        <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+        <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/quiz.css")'>
+    </head>
+    <body>
+        <div class="banner">
+        </div>
+        <div class="container main-frame form-inline">
+            @displayHeader("Ask Watson", "qa", user)
+            
+            <div class="qa-input-box row">
+                <div class="col-md-12">
+                    <div class="pull-left1">
+                        @form(action = routes.QA.askByForm(), 'class -> "form") {
+        
+                            @inputText(requestForm("question"),
+                                'placeholder -> Messages("createquestion.question.placeholder"),
+                                '_label -> Messages("createquestion.question"),
+                                '_help -> "",
+                                'size -> "110",
+                                'class -> "form-control")(handler = questionFieldConstructor, implicitly[Lang])
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="results-container">
+                <div class="loading">
+                    <span class="glyphicon glyphicon-refresh glyphicon-spin"></span>
+                </div>
+                @if(foundAnswers){
+                    <ul class="answer-list">
+                        @if(!response.getFilteredEvidences.isEmpty) {
+                            @defining(response.getQuizAnswers){ answers =>
+                                @if(!answers.isEmpty){
+                                    @for((current, index) <- answers.zipWithIndex) {
+                                        <li id="answer@index">
+                                            <div class="row" id="row@index">
+                                                <div class="col-md-3 answer-img">
+                                                    <img class="center-block" src="@current.getImage.getThumburl"
+                                                    height="@current.getImage.getComputedHeight(150,280)"
+                                                    width="@current.getImage.getComputedWidth(150,280)"/>
+                                                </div>
+                                                <div class="col-md-6 answer-content">
+                                                    <h3>@current.getAnswer</h3>
+                                                    <p>@current.getSentence</p>
+                                                </div>
+                                            </div>
+                                            <div class="row answer-info">
+                                                <div class="col-md-3 answer-rating">
+                                                    <div class="ratings">
+                                                        <strong>Score: </strong>
+                                                        <span class="label label-danger"><strong>@{"%3.2f".format(current.getScore() * 100 )} %</strong></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 answer-url">
+                                                    @if(current.getURL != "") {<a href="@current.getURL" target="_blank">@current.getURL</a>}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                    <button class="btn btn-default btn-block btn-lg" type="button" id="nextAnswer">
+                                        <span class="glyphicon glyphicon-chevron-down"></span> Show next answer
+                                    </button>
+                                }else{
+                                    <div class="alert alert-danger" id='noAnswer'>
+                                        <p>@Messages("qa.noConnection")</p>
+                                    </div>
+                                }
+                            }
+                        }
+                    </ul>
+                } else {
+                    <div class="alert alert-warning" id='noAnswer'>
+                        <p>@Messages("qa.noAnswer")</p>
+                    </div>
+                }
+            </div>
+            <div class="results-bottom"></div>
+            @displayFooter()
+        </div>
+
+        <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+        <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+        <script type='text/javascript' src='@routes.Assets.at("javascripts/qa.js")'></script>
+    </body>
+</html>
