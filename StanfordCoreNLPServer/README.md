@@ -9,7 +9,7 @@ CoreNLP) that allows to respond the annotated text in JSON format to the request
 
 ## Usage
 
-The server will be listening by default on Port 8080.
+The server will be listening by default on Port *8080*.
 The text you want to analyze needs to be POSTed as field `text`.
 Response format can be defined with parameter `outputMode` to *xml* (default) or *json*.
 
@@ -20,20 +20,24 @@ Response format can be defined with parameter `outputMode` to *xml* (default) or
 ## Installation
 
 1. Download and install the third party libraries:
+	```shell
 	cd StanfordCoreNLPServer
 	ant libs
+	```
 
 2. Compile the JAR file:
-
+	```shell
 	ant jar
-
-3. Run the server (default on Port 8080):
-
+	```
+3. Run the server (default on Port *8080*):
+	```shell
 	ant run
-	(optionally append -Dport=<PortNo>)
+	```
+	(optionally append *-Dport=<PortNo>*)
 
-	or just execute the jar (from build/jar) with other port number as optional argument.
+	or just execute the jar (from *build/jar*) with other port number as optional argument.
 
 For Simpsons-related Named Entity Recognition the file *res/simpsons-regexner.txt* is needed!
 
 Logging options and default port can be changed in the StanfordCoreNLPServer class.
+

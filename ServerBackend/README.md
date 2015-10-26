@@ -1,9 +1,8 @@
 # Simpsons Quiz ServerBackend
 
 ## About
-For managing SimpsonsQuiz related data like users, questions and reviews a RESTful ServerBackend was implemented.
-The ServerBackend mainly acts as intermediary between the database and the SimpsonsQuiz applications. It was programmed in
-PHP and uses [Slim](http://www.slimframework.com/), a micro framework for PHP.
+For managing SimpsonsQuiz related data like *users*, *questions* and *reviews* a RESTful ServerBackend was implemented.
+The ServerBackend mainly acts as intermediary between the database and the SimpsonsQuiz applications. It was programmed in PHP and uses [Slim](http://www.slimframework.com/), a micro framework for PHP.
 
 ## Prerequisites
 * (Apache) Web Server with PHP version 5.3.0 or newer and enabled mod_rewrite
@@ -17,7 +16,7 @@ PHP and uses [Slim](http://www.slimframework.com/), a micro framework for PHP.
 
 3. Set Admin-Password, Guest-Password and Guest-ApiKey in 'code/init.php'
 
-4. Copy files from code-directory to your webserver
+4. Copy files from *code*-directory to your webserver
 
 5. Run the 'init.php' for database initialization
 
@@ -25,10 +24,10 @@ PHP and uses [Slim](http://www.slimframework.com/), a micro framework for PHP.
 
 7. Now the ServerBackend should be working.
 
-The Backend-URL for the clients is: '<URL of ServerBackend directory>/api/'.
+The Backend-URL for the clients is: '&lt;URL of ServerBackend directory&gt;/api/'.
 
 ## API-Calls
-The ServerBackend offers different functionality over its REST API which are listed in at '<URL of ServerBackend directory>/api/overview.txt' or locally in 'api/overview.txt'.
+The ServerBackend offers different functionality over its REST API which are listed in at '&lt;URL of ServerBackend directory&gt;/api/overview.txt' or locally in 'api/overview.txt'.
 
 HTTP-Requests to the ServerBackend have to be send with corresponding HTTP-Method and Content-Type `application/x-www-form-urlencoded`, responses are sent as JSON-Objects with Content-Type `application/json` to the client.
 
@@ -39,6 +38,7 @@ These keys has to be send as `AppKey` responding `ApiKey` header fields with cor
 ## Export Quiz Questions
 
 The ServerBackend offers with 'export.php' an export solution.
-Open '<URL of ServerBackend directory>/export.php' in your Browser.
+Open '&lt;URL of ServerBackend directory&gt;/export.php' in your Browser.
 With the `EXPORT_AUTH_KEY` defined in 'config.php' you can authorize for exporting.
 You can either download the questions as CSV or show them as HTML page by deactivating the checkbox.
+

@@ -53,7 +53,11 @@ After installation, you should have all the needed credentials and URLs together
 1. Rename 'SimpsonsQuiz/app/src/main/assets/simpsonsquiz_sample.properties' to 'simpsonsquiz.properties'
 2. Open the file and enter the credentials and URLs where asked for.
 3. Run
-   ```gradlew assembleDebug```
+
+   ```shell
+	gradle assembleDebug
+   ```
+   
    in 'SimpsonsQuiz'
 4. The builded .apk file can be found in 'SimpsonsQuiz/app/build/outputs/apk/app-debug.apk'
 
@@ -62,20 +66,32 @@ After installation, you should have all the needed credentials and URLs together
 1. Rename 'SimpsonsQuiz-Web/conf/credentials_sample.conf' to 'credentials.conf'
 2. Open the file and enter the credentials and URLs where asked for.
 3. Run
-   ```gradle copyJars```
-   in 'SimpsonsQuiz' to copy compiled jars into web project
+
+   ```shell
+	gradle copyJars
+   ```
+   
+   in 'SimpsonsQuiz' to copy compiled jars into web project ('SimpsonsQuiz-Web/lib')
 4. Run
-   ```sbt dist```
+
+   ```shell
+	sbt dist
+   ```
+   
    in 'SimpsonsQuiz-Web' for packaging
 5. The packaged zip can be found in 'SimpsonsQuiz-Web/target/universal/'
-6. The executable can be found in the bin-folder of the extracted zip
-#### for Linux only:
-7. Make 'simpsonsquiz-web-1.0/bin/simpsonsquiz-web' executable with
-   ```chmod +x simpsonsquiz-web```
-8. Run the executable with
-   ```./simpsonsquiz-web -DapplyEvolutions.default=true```
-   Optionally you can specify the port with ```-Dhttp.port=8080``` as parameter
+6. The executable can be found in the _bin_-folder of the extracted zip
+
+7. **Linux only:** Make 'simpsonsquiz-web-1.0/bin/simpsonsquiz-web' executable with
+   ```shell
+   	chmod +x simpsonsquiz-web
+   ```
+8. **Linux:** Run the executable with
+   ```shell
+	./simpsonsquiz-web -DapplyEvolutions.default=true
+   ```
+
+   Optionally you can specify the port with `-Dhttp.port=8080` as parameter
 
 (More infos on Play Framework Deployment: https://www.playframework.com/documentation/latest/Production)
 
-	
