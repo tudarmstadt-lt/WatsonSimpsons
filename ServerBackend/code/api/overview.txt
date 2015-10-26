@@ -1,0 +1,26 @@
+URL Method  Parameters  Description Notes
+
+api/register	POST	username, password  -   User registration   (no authentication required)
+api/login	POST	username, password  -   User login  (no authentication required)
+api/user    POST    username, password  -   edit User
+api/user    DELETE  - Deleting current User
+api/user/:id    GET -   Retrieving User for given id    Role: admin
+api/user/score  GET -   Fetching score for current User
+api/user/score  POST    points  Incrementing score for current User
+api/user/score  DELETE  -   Resetting score for current User
+api/highscores   GET -   Fetching highscores
+api/questions	POST	question, correctAnswer, falseAnswer1, falseAnswer2, falseAnswer3, category To create new question
+api/questions	GET [filter_unapproved, category, difficulty]   Fetching all questions (optionally filtered by approving/category)
+api/questions/user    GET [filter_unapproved, category, difficulty]   Fetching all questions unseen by user (neither answered nor modified) (optionally filtered by approving/category/difficulty)
+api/questions/:id	GET -   Fetching single question
+api/questions/edit/:id	POST    question, correctAnswer, falseAnswer1, falseAnswer2, falseAnswer3, category Updating single question    Role: editor
+api/questions/:id	DELETE  -   Deleting single question    Role: admin
+api/questions/user-status/:id   GET -   Fetching user status for question
+api/questions/user-status/:id   POST    -   To set user status for question
+api/questions/approve/:id   POST    status  Approving the question  Role: approver
+api/questions/review   GET -   Fetching questions for review
+api/questions/review/:id    POST    answerCorrect, answerDistractors, questionFormulation, questionDifficulty   To set user review for question
+api/questions/review/:id    GET -   Fetching user review for question
+api/questions/review/:id    DELETE  -   Deleting user review for question
+api/questions/avg-review/:id    GET -   Fetching average review for question
+api/questions/export    GET -   Fetching questions with rating information  Role: admin

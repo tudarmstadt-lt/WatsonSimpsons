@@ -1,0 +1,15 @@
+{
+  "name": "tudarmstadt-lt/simpsonsquiz-serverbackend",
+  "description": "ServerBackend for SimpsonsQuiz",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "LT Group at TU Darmstadt",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "slim/slim": "2.6.2"
+  }
+}
