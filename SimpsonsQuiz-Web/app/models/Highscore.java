@@ -1,6 +1,7 @@
 package models;
 
 import java.util.List;
+import java.util.Map;
 
 import backend.QuizBackend;
 import controllers.QuizBackendService;
@@ -18,7 +19,9 @@ public class Highscore {
         QuizBackend quizBackend = QuizBackendService.getInstance();
 
         highscore = quizBackend.getUserHighscores(apiKey);
-        if (highscore.size() > 10) highscore = highscore.subList(0, 10);
+
+        if (highscore.size() > 10)
+            highscore = highscore.subList(0, 10);
 
     }
 
@@ -27,4 +30,13 @@ public class Highscore {
 
         return quizBackend.getUserScore(apiKey);
     }
+
+    public static int getUserRank(String apiKey) {
+        QuizBackend quizBackend = QuizBackendService.getInstance();
+
+        Map.Entry<backend.types.QuizUser, Integer> ur = quizBackend.getUserRanking(apiKey);
+
+        return ur.getValue();
+    }
+
 }

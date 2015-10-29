@@ -31,7 +31,8 @@ public class Highscore extends Controller {
         User currentUser = User.findByUsername(request().username());
         models.Highscore highscoreModel = new models.Highscore();
         highscoreModel.loadHighscore(currentUser.apiKey);
-        return ok(highscore.render(currentUser, highscoreModel));
+        int rank = highscoreModel.getUserRank(currentUser.apiKey);
+        return ok(highscore.render(currentUser, highscoreModel, rank));
     }
 
 

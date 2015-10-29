@@ -1,4 +1,4 @@
-@(currentuser: models.User, highscore: models.Highscore)
+@(currentuser: models.User, highscore: models.Highscore, currentuserrank: Integer)
 
 <!DOCTYPE html>
 
@@ -39,6 +39,13 @@
                         <td>@i</td>
                         <td>@user.getUsername()</td>
                         <td>@user.getScore()</td>
+                    </tr>
+                }
+                @if(currentuserrank > 10) {
+                    <tr class="own-highscore">
+                        <td>@currentuserrank</td>
+                        <td>@currentuser.username</td>
+                        <td>@models.Highscore.getScore(currentuser.apiKey)</td>
                     </tr>
                 }
                 </tbody>
