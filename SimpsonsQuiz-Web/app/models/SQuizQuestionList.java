@@ -113,9 +113,9 @@ public class SQuizQuestionList extends Model {
         return q;
     }
 
-    public static void submitReview(String apiKey, int questionID, boolean check0, boolean check1, boolean check2, int difficulty) {
+    public static boolean submitReview(String apiKey, int questionID, boolean check0, boolean check1, boolean check2, int difficulty) {
         QuizBackend quizBackend = QuizBackendService.getInstance();
-        quizBackend.setQuestionReview(apiKey, questionID, check0, check1, check2, difficulty);
+        return quizBackend.setQuestionReview(apiKey, questionID, check0, check1, check2, difficulty);
     }
 
 }

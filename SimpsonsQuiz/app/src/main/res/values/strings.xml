@@ -88,7 +88,7 @@
     <!-- About text -->
     <string name="about_0">Simpsons Quiz</string>
     <string name="about_1">Created by</string>
-    <string name="about_2">Daniel Theiß\nTimo Gerecht\nUte Winchenbach\nStefan Bauregger</string>
+    <string name="about_2">Stefan Bauregger\nTimo Gerecht\nDaniel Theiß\nUte Winchenbach</string>
     <string name="about">About</string>
     <string name="help">Help</string>
     <string name="about_3">The Simpsons Quiz was developed as part of the students lab <a href="https://www.lt.informatik.tu-darmstadt.de/de/teaching/lectures-and-classes/summer-term-2015/question-answering-technologies-behind-ibm-watson/">Question Answering Technologies Behind IBM Watson</a> offered by the <a href="http://www.lt.informatik.tu-darmstadt.de/">Language Technology Group at Technische Universität Darmstadt</a> and uses <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/">IBM Watson</a> technology.</string>
@@ -98,6 +98,8 @@
     <string name="error_loading_questions">Error while loading the questions. Maybe you have internet connection problems.</string>
     <string name="error_loading_highscore">Error while loading the highscore. Maybe you have internet connection problems.</string>
     <string name="error_creating_question">Error while creating the question. Maybe you have internet connection problems.</string>
+    <string name="error_submitting_review">Error while submitting the review. Maybe you have internet connection problems.</string>
+
     <string name="A">A</string>
     <string name="B">B</string>
     <string name="error">Error</string>

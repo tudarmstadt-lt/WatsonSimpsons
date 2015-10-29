@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ import de.tudarmstadt.lt.simpsonsQuiz.util.Util;
 public class LoginRegisterActivity extends Activity {
 
     static SimpsonsQuizApp sqaApp;
+    private static ProgressDialog progDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +128,17 @@ public class LoginRegisterActivity extends Activity {
      */
     private class LoginTask extends AsyncTask<String, Void, QuizUser> {
 
+
+        @Override
+        protected void onPreExecute() {
+            progDialog = new ProgressDialog(LoginRegisterActivity.this);
+            progDialog.setMessage("Login...");
+            progDialog.setIndeterminate(false);
+            progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDialog.setCancelable(true);
+            progDialog.show();
+        }
+
         /**
          * The system calls this to perform work in a worker thread and
          * delivers it the parameters given to AsyncTask.execute()
@@ -136,6 +151,7 @@ public class LoginRegisterActivity extends Activity {
 
         @Override
         protected void onPostExecute(QuizUser user) {
+            dismissProgDialogHandler.obtainMessage().sendToTarget();
             if (user == null) {
                 new DialogFragment() {
                     @Override
@@ -164,6 +180,16 @@ public class LoginRegisterActivity extends Activity {
      */
     private class RegisterTask extends AsyncTask<String, Void, QuizUser> {
 
+        @Override
+        protected void onPreExecute() {
+            progDialog = new ProgressDialog(LoginRegisterActivity.this);
+            progDialog.setMessage("Registering the User...");
+            progDialog.setIndeterminate(false);
+            progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDialog.setCancelable(true);
+            progDialog.show();
+        }
+
         /**
          * The system calls this to perform work in a worker thread and
          * delivers it the parameters given to AsyncTask.execute()
@@ -179,6 +205,7 @@ public class LoginRegisterActivity extends Activity {
 
         @Override
         protected void onPostExecute(QuizUser user) {
+            dismissProgDialogHandler.obtainMessage().sendToTarget();
             if (user == null) {
                 new DialogFragment() {
                     @Override
@@ -249,5 +276,21 @@ public class LoginRegisterActivity extends Activity {
                 }.show(LoginRegisterActivity.this.getFragmentManager(), "error");
             }
         }
+    }
+
+    /**
+     * removes the ProgressView
+     */
+    private static Handler dismissProgDialogHandler;
+
+    static {
+        dismissProgDialogHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                if (progDialog.isShowing())
+                    progDialog.dismiss();
+                return true;
+            }
+        });
     }
 }

@@ -446,7 +446,7 @@ public class QuizBackend {
         if (!response.isError())
             return response.getQuestions();
         else
-            return new ArrayList<QuizQuestion>();
+            return null;
     }
 
     /**

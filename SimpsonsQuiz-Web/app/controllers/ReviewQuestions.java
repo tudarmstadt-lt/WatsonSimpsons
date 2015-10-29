@@ -78,7 +78,10 @@ public class ReviewQuestions extends Controller {
     }
 
     public Result submit(int id, String check0, String check1, String check2, int difficulty) {
-        SQuizQuestionList.submitReview(User.findByUsername(request().username()).apiKey, id, check0.equals("true"), check1.equals("true"), check2.equals("true"), difficulty);
+        boolean res = SQuizQuestionList.submitReview(User.findByUsername(request().username()).apiKey, id, check0.equals("true"), check1.equals("true"), check2.equals("true"), difficulty);
+
+        if(res == false)
+            return internalServerError("Timeout");
 
         return nextQuestion();
     }

@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
@@ -20,7 +23,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +49,7 @@ public class ReviewActivity extends Activity {
     private static Button quizAnswerButton2;
     private static Button quizAnswerButton3;
     private static Button quizAnswerButton4;
+    private static ProgressDialog progDialog;
 
     private static boolean questionFormulatedWell;
     private static boolean rightAnswerCorrect;
@@ -194,7 +197,8 @@ public class ReviewActivity extends Activity {
 
     public void rateQuestionButtonClick(View view) {
 
-        DialogFragment newFragment = new AnswerFeedbackDialogFragment();
+        AnswerFeedbackDialogFragment newFragment = new AnswerFeedbackDialogFragment();
+        newFragment.setActivity(this);
         newFragment.show(getFragmentManager(), "rating");
     }
 
@@ -262,10 +266,15 @@ public class ReviewActivity extends Activity {
 
 
     public static class AnswerFeedbackDialogFragment extends DialogFragment {
+        Activity activity;
         CheckBox questionFormulatedWellCheckBox;
         CheckBox rightAnswerCorrectCheckBox;
         CheckBox distractorsCorrectCheckBox;
         SeekBar difficultySeekBar;
+
+        void setActivity(Activity activity){
+            this.activity = activity;
+        }
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -298,6 +307,7 @@ public class ReviewActivity extends Activity {
                             int difficulty = difficultyValue*2+1;
 
                             RateQuestionTask rqt = new RateQuestionTask();
+                            rqt.setActivity(activity);
                             rqt.execute(questionID, (rightAnswerCorrect) ? 1 : 0, (distractorsCorrect) ? 1 : 0, (questionFormulatedWell) ? 1 : 0, difficulty);
                             dialog.dismiss();
                             getActivity().findViewById(R.id.quiz_btn_rate).setEnabled(false);
@@ -324,13 +334,13 @@ public class ReviewActivity extends Activity {
     /**
      * Create a new Question for the Quiz and send it to the database
      */
-    private class LoadQuestionsTask extends AsyncTask<Void, Void, Void> {
+    private class LoadQuestionsTask extends AsyncTask<Void, Void, Boolean> {
 
         /**
          * The system calls this to perform work in a worker thread and
          * delivers it the parameters given to AsyncTask.execute()
          */
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             List<QuizQuestion> questions;
 
             questions = sqaApp.getQuizBackend().getQuestionsForReview();
@@ -345,37 +355,78 @@ public class ReviewActivity extends Activity {
 
                 // initialize Iterator and set nextQuestion for UI
                 quizQuestionIterator = quizQuestionList.listIterator();
+                return true;
 
             } else {
                 Log.e(CLASS_NAME, "Could not load questions from backend!");
+                return false;
             }
-            return null;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            if(quizQuestionList.size()!=0) {
-                nextQuestion();
-            } else {
-                ErrorDialogFragment edf = new ErrorDialogFragment();
+        protected void onPostExecute(Boolean result) {
+            if(!result){
+                LoadingErrorDialogFragment edf = new LoadingErrorDialogFragment();
                 edf.show(getFragmentManager(), "error");
+            } else {
+                nextQuestion();
             }
         }
     }
+
 
     /**
      * Sends the rating for a question to the database
      */
-    private static class RateQuestionTask extends AsyncTask<Integer, Void, Void> {
+    private static class RateQuestionTask extends AsyncTask<Integer, Void, Boolean> {
+
+        Activity activity;
+
+        void setActivity(Activity a){
+            activity = a;
+        }
 
         @Override
-        protected Void doInBackground(Integer... params) {
-            sqaApp.getQuizBackend().setQuestionReview(params[0], params[1] > 0, params[2] > 0, params[3] > 0, params[4]);
-            return null;
+        protected void onPreExecute() {
+            progDialog = new ProgressDialog(activity);
+            progDialog.setMessage("Submitting the Review...");
+            progDialog.setIndeterminate(false);
+            progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDialog.setCancelable(true);
+            progDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+            return sqaApp.getQuizBackend().setQuestionReview(params[0], params[1] > 0, params[2] > 0, params[3] > 0, params[4]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dismissProgDialogHandler.obtainMessage().sendToTarget();
+            if(!result){
+                SubmittingErrorDialogFragment edf = new SubmittingErrorDialogFragment();
+                edf.show(activity.getFragmentManager(), "error");
+            }
         }
     }
+    /**
+     * removes the ProgressView
+     */
+    private static Handler dismissProgDialogHandler;
 
-    public static class ErrorDialogFragment extends DialogFragment {
+    static {
+        dismissProgDialogHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                if (progDialog.isShowing())
+                    progDialog.dismiss();
+                return true;
+            }
+        });
+    }
+
+    public static class LoadingErrorDialogFragment extends DialogFragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -385,6 +436,39 @@ public class ReviewActivity extends Activity {
 
             final View view = inflater.inflate(R.layout.dialog_quiz_game_feedback, null);
             ((TextView) view.findViewById(R.id.quiz_game_feedback_text)).setText(getString(R.string.error_loading_questions));
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(view).setTitle("Error")
+                    // Add action buttons
+                    .setNegativeButton(R.string.switch_category, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(getActivity(), StartPageActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    })
+                    .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            startActivity(new Intent(getActivity(), ReviewActivity.class));
+                        }
+                    });
+            return builder.create();
+        }
+    }
+
+    public static class SubmittingErrorDialogFragment extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+
+            final View view = inflater.inflate(R.layout.dialog_quiz_game_feedback, null);
+            ((TextView) view.findViewById(R.id.quiz_game_feedback_text)).setText(getString(R.string.error_submitting_review));
 
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout

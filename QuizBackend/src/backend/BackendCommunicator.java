@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import backend.types.ParameterPair;
  * @author dath
  */
 public class BackendCommunicator {
+
+    private final static int TIMEOUT = 5000;
 
     static boolean printOutResponse;
 
@@ -107,6 +110,9 @@ public class BackendCommunicator {
 
             urlConnection.setRequestMethod(requestMethod);
 
+            urlConnection.setConnectTimeout(TIMEOUT);
+            urlConnection.setReadTimeout(TIMEOUT);
+
             if (appKey != null && !appKey.isEmpty())
                 urlConnection.addRequestProperty("AppKey", appKey);
 
@@ -142,9 +148,12 @@ public class BackendCommunicator {
             }
             response = responseString;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "ERROR!";
+        } catch(SocketTimeoutException e) {
+            System.err.println("TIMEOUT! " + e.getMessage());
+            response = "{\"error\":true, \"message\":\"" + "Timeout! "+e.getMessage() + "\"}";
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            response = "{\"error\":true, \"message\":\"" + e.getMessage() + "\"}";
         } finally {
             if (urlConnection != null)
                 urlConnection.disconnect();
