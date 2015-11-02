@@ -43,14 +43,14 @@
                                 options = options(Request.numbersOfAnswers()),
                                 '_label -> "number of answers",
                                 'value -> 15,
-                                'class -> "form-control")(handler = selectFieldConstructor, implicitly[Lang])
+                                'class -> "form-control")(handler = selectFieldConstructor, implicitly[Messages])
                         </div>
                         <div class="col-md-6">
                         @select(requestForm("numberOfWatsonDocuments"),
                                 options = options(Request.numberOfWatsonDocuments()),
                                 '_label -> "Watson Documents used in postprocessing",
                                 'value -> 3,
-                                'class -> "form-control")(handler = selectDocumentsFieldConstructor, implicitly[Lang])
+                                'class -> "form-control")(handler = selectDocumentsFieldConstructor, implicitly[Messages])
 
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                             '_help -> "",
                             'size -> "110",
                             'id -> "watsonquestion",
-                            'class -> "form-control")(handler = questionFieldConstructor, implicitly[Lang])
+                            'class -> "form-control")(handler = questionFieldConstructor, implicitly[Messages])
 
                     </div>
                 
