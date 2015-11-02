@@ -22,3 +22,7 @@ task copyJars(type: Copy) {
     into new File(project(':SimpsonsQuizWeb').projectDir, 'lib')
     include '*.jar'
 }
+
+copyJars.dependsOn(':JWatson:jar')
+copyJars.dependsOn(':AnswerProcessing:jar')
+copyJars.dependsOn(':QuizBackend:jar')
