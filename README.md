@@ -52,14 +52,20 @@ After installation, you should have all the needed credentials and URLs together
 
 1. Rename 'SimpsonsQuiz/app/src/main/assets/simpsonsquiz_sample.properties' to 'simpsonsquiz.properties'
 2. Open the file and enter the credentials and URLs where asked for.
-3. Run
+3. If not using Android Studio, create 'SimpsonsQuiz/local.properties' manually, to set the location of the Android SDK, using the sdk.dir property.
+   Example local.properties file:
+
+	```
+	sdk.dir=/path/to/Android/Sdk
+	```
+4. Run
 
    ```shell
 	gradle assembleDebug
    ```
    
    in 'SimpsonsQuiz'
-4. The builded .apk file can be found in 'SimpsonsQuiz/app/build/outputs/apk/app-debug.apk'
+5. The builded .apk file can be found in 'SimpsonsQuiz/app/build/outputs/apk/app-debug.apk'
 
 ### Web Application
 
@@ -71,7 +77,8 @@ After installation, you should have all the needed credentials and URLs together
 	gradle copyJars
    ```
    
-   in 'SimpsonsQuiz' to copy compiled jars into web project ('SimpsonsQuiz-Web/lib')
+   in 'SimpsonsQuiz' to compile and copy jars into web project ('SimpsonsQuiz-Web/lib')
+   **Note:** The location of the Android SDK has to be set, see *Android Application, Step 3* above.
 4. Run
 
    ```shell
