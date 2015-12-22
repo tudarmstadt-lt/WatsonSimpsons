@@ -17,8 +17,8 @@ public class QuizAnswer {
 
 	public QuizAnswer(String answer, Sentence sentence) {
 		super();
-		//Episode or Season as Question type
-		//NEtypes is empty
+		// Episode or Season as Question type
+		// NEtypes is empty
 		this.answer = answer;
 		if (sentence != null) {
 			this.score = sentence.getScore("default");
@@ -29,13 +29,12 @@ public class QuizAnswer {
 
 	public QuizAnswer(String answer, Double score, NeOccurrence neOccurrence) {
 		super();
-		//we have concatenate tokens with " "
-		//delete white spaces for " '" and " ,"
+		// we have concatenate tokens with " "
+		// replace quotation marks
 		this.answer = answer
-				//.replace("of ' ", "of '")
-				//.replace("and ' ", "and '").replace("& ' ", "& '")
-				//.replace("or ' ", "or '").replace(" ' ", "' ")
-				//.replace(" , ", ", ").replace(" 's", "'s")
+				.replace(" ''", "\"")
+				.replace("`` ", "\"")
+				.replace("'' ", "\"")
 				;
 		this.score = score;
 		this.sentence = neOccurrence.getSentence();
@@ -45,9 +44,9 @@ public class QuizAnswer {
  
 	public QuizAnswer(Sentence bestSentence) {
 		super();
-		//set title as answer
-		//no shorter Answer/ NE extraction
-		//best answer is sentence
+		// set title as answer
+		// no shorter Answer/ NE extraction
+		// best answer is sentence
 		this.answer = bestSentence.getParentText().getTitle()
 				.replaceFirst("\\[\\d+\\]", "").split(" : ")[0].trim();
 		this.score = bestSentence.getScore("default");
