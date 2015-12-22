@@ -14,48 +14,54 @@ import imagefinder.types.PageScaledImage;
 
 public class ImageBackendCommunicator extends BackendCommunicator {
 
-	public static AllimagesQuery getAllImagesResponse(String responseString) {
-		Gson gson = new Gson();
-		String response = execute(responseString, "GET", "", "", false, null);
-		return gson.fromJson(response, AllimagesQuery.class);
-	}
+    public static AllimagesQuery getAllImagesResponse(String url) {
+        Gson gson = new Gson();
+        String response = execute(url, "GET", "", "", false, null);
+        return gson.fromJson(response, AllimagesQuery.class);
+    }
 
-	public static ImagesOnPage getImagesOnArticleResponse(
-			String responseString) {
-		Gson gson = new Gson();
-		String response = execute(responseString, "GET", "", "", false, null);
+    public static ImagesOnPage getImagesOnArticleResponse(String url) {
+        Gson gson = new Gson();
+        String response = execute(url, "GET", "", "", false, null);
 
-		JsonElement root = new JsonParser().parse(response);
-		JsonObject query = root.getAsJsonObject().get("query")
-				.getAsJsonObject();
-		JsonObject pages = query.getAsJsonObject().get("pages")
-				.getAsJsonObject();
+        JsonElement root = new JsonParser().parse(response);
+        if (root.getAsJsonObject().get("query") == null)
+            return null;
 
-		// Iterate over this map
-		for (Entry<String, JsonElement> entry : pages.entrySet()) {
-			ImagesOnPage page = gson.fromJson(entry.getValue(),
-					ImagesOnPage.class);
-			return page;
-		}
-		return null;
-	}
+        JsonObject query = root.getAsJsonObject().get("query").getAsJsonObject();
+        if (query.getAsJsonObject().get("pages") == null)
+            return null;
 
-	public static PageScaledImage getThumbImageResponse(String responseString) {
-		Gson gson = new Gson();
+        JsonObject pages = query.getAsJsonObject().get("pages").getAsJsonObject();
 
-		String response = execute(responseString, "GET", "", "", false, null);
+        // Iterate over this map
+        for (Entry<String, JsonElement> entry : pages.entrySet()) {
+            ImagesOnPage page = gson.fromJson(entry.getValue(), ImagesOnPage.class);
+            return page;
+        }
 
-		JsonElement root = new JsonParser().parse(response);
-		JsonObject query = root.getAsJsonObject().get("query")
-				.getAsJsonObject();
-		JsonObject pages = query.getAsJsonObject().get("pages")
-				.getAsJsonObject();
-		for (Entry<String, JsonElement> entry : pages.entrySet()) {
-			PageScaledImage page = gson.fromJson(entry.getValue(),
-					PageScaledImage.class);
-			return page;
-		}
-		return null;
-	}
+        return null;
+    }
 
+    public static PageScaledImage getThumbImageResponse(String url) {
+        Gson gson = new Gson();
+        String response = execute(url, "GET", "", "", false, null);
+
+        JsonElement root = new JsonParser().parse(response);
+        if (root.getAsJsonObject().get("query") == null)
+            return null;
+
+        JsonObject query = root.getAsJsonObject().get("query").getAsJsonObject();
+        if (query.getAsJsonObject().get("pages") == null)
+            return null;
+
+        JsonObject pages = query.getAsJsonObject().get("pages").getAsJsonObject();
+
+        for (Entry<String, JsonElement> entry : pages.entrySet()) {
+            PageScaledImage page = gson.fromJson(entry.getValue(), PageScaledImage.class);
+            return page;
+        }
+
+        return null;
+    }
 }
