@@ -18,6 +18,9 @@
 
 package controllers;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+
 import backend.QuizBackend;
 import backend.types.QuizQuestion;
 import models.QuestionRequest;
@@ -34,17 +37,23 @@ import static play.data.Form.form;
 @Security.Authenticated(ActionAuthenticator.class)
 public class CreateQuestion extends AskWatson {
 
+    private boolean showHomer;
+
+    public CreateQuestion() {
+        Config config = ConfigFactory.load();
+        showHomer = config.getBoolean("showSimpsonsPictures");
+    }
 
     public Result index() {
-        return ok(create_question.render(form(Request.class), User.findByUsername(request().username()), new Response.EmptyResponse(), false));
+        return ok(create_question.render(form(Request.class), User.findByUsername(request().username()), new Response.EmptyResponse(), false, showHomer));
     }
 
     public Result getOk(Form<Request> request, User user, Response response) {
-        return ok(create_question.render(request, user, response, false));
+        return ok(create_question.render(request, user, response, false, showHomer));
     }
 
     public Result getBadRequest(Form<Request> request, User user, Response response) {
-        return badRequest(create_question.render(request, user, response, false));
+        return badRequest(create_question.render(request, user, response, false, showHomer));
     }
 
     public int getNumberOfWatsonDocs(Form<Request> request) {
@@ -60,15 +69,15 @@ public class CreateQuestion extends AskWatson {
         User user = User.findByUsername(ctx().session().get("username"));
 
         if (request.hasErrors()) {
-            return badRequest(create_question.render(form(Request.class), user, new Response.EmptyResponse(), false));
+            return badRequest(create_question.render(form(Request.class), user, new Response.EmptyResponse(), false, showHomer));
         } else {
             QuizBackend quizBackend = QuizBackendService.getInstance();
 
             QuizQuestion quizQuestion = new QuizQuestion(request.get().question, request.get().correctAnswer, request.get().falseAnswer1, request.get().falseAnswer2, request.get().falseAnswer3, request.get().category);
             if (quizBackend.addQuestion(user.apiKey, quizQuestion))
-                return ok(create_question.render(form(Request.class), user, new Response.EmptyResponse(), true));
+                return ok(create_question.render(form(Request.class), user, new Response.EmptyResponse(), true, showHomer));
             else
-                return badRequest(create_question.render(form(Request.class), user, new Response.EmptyResponse(), false));
+                return badRequest(create_question.render(form(Request.class), user, new Response.EmptyResponse(), false, showHomer));
         }
     }
 }

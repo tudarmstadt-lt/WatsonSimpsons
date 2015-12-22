@@ -1,4 +1,4 @@
-@(requestForm: Form[models.Request], user: models.User, response: models.Response, saved: Boolean)
+@(requestForm: Form[models.Request], user: models.User, response: models.Response, saved: Boolean, showHomer: Boolean)
 
 <!DOCTYPE html>
 
@@ -85,11 +85,15 @@
                         @for((current, index) <- response.getQuizAnswers.zipWithIndex) {
                             <li id="answer@index">
                                 <div class="row" id="row@index">
-                                    <div class="col-md-3 answer-img">
-                                        <img class="center-block" src="@current.getImage.getThumburl"
-                                             height="@current.getImage.getComputedHeight(150,280)"
-                                             width="@current.getImage.getComputedWidth(150,280)"/>
-                                    </div>
+                                    @defining(current.getImage){ image =>
+                                        <div class="col-md-3 answer-img">
+                                        @if(image != null) {
+                                            <img class="center-block" src="@image.getThumburl"
+                                                 height="@image.getComputedHeight(150,280)"
+                                                width="@image.getComputedWidth(150,280)"/>
+                                        }
+                                        </div>
+                                    }
                                     <div class="col-md-6 answer-content">
                                         <h3>@current.getAnswer</h3>
                                         <p>@current.getSentence</p>
@@ -128,7 +132,9 @@
                                 <li class="hidden-form" id="rowv@index">
                                     <div class="row" id="row-@index">
                                         <div class="col-md-3 answer-img">
+                                            @if(showHomer){
                                                  <img class="center-block" src='@routes.Assets.at("img/homer.png")' height="150" width="120"/>
+                                            }
                                         </div>
                                         <div class="col-md-6 answer-content">
                                                     <h3><input class="form-control input-individual" type="text" id="individual-@index" placeholder="Please enter an answer"></h3>

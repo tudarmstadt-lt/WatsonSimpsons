@@ -14,7 +14,7 @@ import play.db.ebean.Model;
 public class SQuizQuestion extends Model {
 
     @Id
-    public Long id;
+    public String id;
 
     @Constraints.Required
     public String correctAnswer;
@@ -29,17 +29,18 @@ public class SQuizQuestion extends Model {
     @Constraints.Required
     public String question;
 
-    public SQuizQuestion(QuizQuestion qq) {
+    public SQuizQuestion(QuizQuestion qq, String listId) {
         correctAnswer = qq.getCorrectAnswer();
         falseAnswer1 = qq.getFalseAnswer1();
         falseAnswer2 = qq.getFalseAnswer2();
         falseAnswer3 = qq.getFalseAnswer3();
         questionId = qq.getId();
         question = qq.getQuestion();
+        id= listId+"_"+ questionId;
     }
 
-    public static SQuizQuestion createFromQuizQuestion(QuizQuestion question) {
-        SQuizQuestion newSQQ = new SQuizQuestion(question);
+    public static SQuizQuestion createFromQuizQuestion(QuizQuestion question, String listId) {
+        SQuizQuestion newSQQ = new SQuizQuestion(question, listId);
         return newSQQ;
     }
 }

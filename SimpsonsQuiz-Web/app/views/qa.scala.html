@@ -49,15 +49,22 @@
                                     @for((current, index) <- answers.zipWithIndex) {
                                         <li id="answer@index">
                                             <div class="row" id="row@index">
-                                                <div class="col-md-3 answer-img">
-                                                    <img class="center-block" src="@current.getImage.getThumburl"
-                                                    height="@current.getImage.getComputedHeight(150,280)"
-                                                    width="@current.getImage.getComputedWidth(150,280)"/>
-                                                </div>
-                                                <div class="col-md-6 answer-content">
-                                                    <h3>@current.getAnswer</h3>
-                                                    <p>@current.getSentence</p>
-                                                </div>
+                                                @defining(current.getImage){ image =>
+
+                                                    @if(image != null) {
+                                                        <div class="col-md-3 answer-img">
+                                                                <img class="center-block" src="@image.getThumburl"
+                                                                height="@image.getComputedHeight(150,280)"
+                                                                width="@image.getComputedWidth(150,280)"/>
+                                                        </div>
+                                                        <div class="col-md-6 answer-content">
+                                                    } else {
+                                                        <div class="answer-content">
+                                                    }
+                                                            <h3>@current.getAnswer</h3>
+                                                            <p>@current.getSentence</p>
+                                                        </div>
+                                                }
                                             </div>
                                             <div class="row answer-info">
                                                 <div class="col-md-3 answer-rating">

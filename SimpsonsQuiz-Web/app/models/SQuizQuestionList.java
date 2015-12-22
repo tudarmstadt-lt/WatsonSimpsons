@@ -64,13 +64,13 @@ public class SQuizQuestionList extends Model {
     }
 
     public static SQuizQuestionList loadQuestions(String apiKey, String tag, List<QuizQuestion> quizQuestions) {
-        SQuizQuestionList sQQL = find.where().eq("id", apiKey + tag).findUnique();
-        if (sQQL != null) sQQL.delete();
-        sQQL = new SQuizQuestionList(apiKey + tag);
+        String listId= apiKey + tag;
+        deleteList(listId);
+        SQuizQuestionList sQQL = new SQuizQuestionList(listId);
 
         if (quizQuestions != null) {
             for (QuizQuestion question : quizQuestions) {
-                SQuizQuestion newSQQ = SQuizQuestion.createFromQuizQuestion(question);
+                SQuizQuestion newSQQ = SQuizQuestion.createFromQuizQuestion(question, listId);
                 sQQL.quizQuestionList.add(newSQQ);
             }
 
@@ -118,4 +118,17 @@ public class SQuizQuestionList extends Model {
         return quizBackend.setQuestionReview(apiKey, questionID, check0, check1, check2, difficulty);
     }
 
+    /**
+     * Delete all lists in local database that are associated with certain user
+     * @param apiKey identifies user
+     */
+    public static void deleteAll(String apiKey){
+        deleteList(apiKey+ "_review");
+        deleteList(apiKey+ "_quiz");
+    }
+    
+    private static void deleteList(String listId){
+        SQuizQuestionList sQQL = find.where().eq("id", listId).findUnique();
+        if (sQQL != null) sQQL.delete();
+    }
 }

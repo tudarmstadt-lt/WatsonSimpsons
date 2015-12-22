@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table squiz_question (
-  id                        bigint not null,
+  id                        varchar(255) not null,
   squiz_question_list_id    varchar(255) not null,
   correct_answer            varchar(255),
   false_answer1             varchar(255),

@@ -16,7 +16,8 @@ libraryDependencies ++= Seq(
   "org.webjars" % "font-awesome" % "4.3.0-1",
   "com.google.inject" % "guice" % "4.0-beta5",
   "commons-collections" % "commons-collections" % "3.2.1",
-  "com.google.code.gson" % "gson" % "2.3.1"
+  "com.google.code.gson" % "gson" % "2.3.1",
+  "org.bouncycastle" % "bcprov-jdk15on" % "1.53"
 )
 
 resolvers ++= Seq(

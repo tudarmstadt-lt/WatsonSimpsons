@@ -22,6 +22,8 @@ import jwatson.question.WatsonQuestion;
 
 public class AnswerProcessing {
 
+    private static Config conf;
+
     public static List<QuizAnswer> getQuizAnswers(WatsonAnswer answer,
                                                   WatsonQuestion question, int numberOfAnswers) throws IOException {
         return getAnswers(answer, question, numberOfAnswers, true);
@@ -44,7 +46,8 @@ public class AnswerProcessing {
         // Question Annotation
         Question pQuestion = new Question(question.getQuestion()
                 .getQuestionText());
-        Config conf = ConfigFactory.load();
+        if (conf == null)
+            conf = ConfigFactory.load();
 
         // Pipeline Execution
         pQuestion = Pipeline.annotateQuestion(pQuestion,
@@ -66,24 +69,30 @@ public class AnswerProcessing {
             answers.add(pAnswer);
         }
 
-        //QuizPipeline Execution
+        // QuizPipeline Execution
         if (isQuiz)
             allAnswers = QuizPipeline.executePipeline(pQuestion, answers,
                     conf.getString("remoteNLP.url"), numberOfAnswers);
         else
-            //without generated (random) answers
+            // without generated (random) answers
             allAnswers = QuizPipeline.executeQAPipeline(pQuestion, answers,
                     conf.getString("remoteNLP.url"));
 
-        //find images for quiz answers
-        for (QuizAnswer qAnswer : allAnswers) {
-            boolean isEpisodeorSeason = qAnswer.isEpisodeOrSeason();
-            imagefinder.types.Image image = ImageFinder.findPicture(
-                    qAnswer.getImageName(), isEpisodeorSeason, 220);
-            qAnswer.setImage(new Image(image.getName(), image.getWidth(), image
-                    .getHeight(), image.getUrl(), image.getDescriptionurl(),
-                    image.getThumburl(), image.getTitle()));
+        // check if pictures should be loaded
+        boolean loadPictures = conf.getBoolean("showSimpsonsPictures");
+
+        if (loadPictures) {
+            // find images for quiz answers
+            for (QuizAnswer qAnswer : allAnswers) {
+                boolean isEpisodeorSeason = qAnswer.isEpisodeOrSeason();
+                imagefinder.types.Image image = ImageFinder.findPicture(
+                        qAnswer.getImageName(), isEpisodeorSeason, 220);
+                qAnswer.setImage(new Image(image.getName(), image.getWidth(), image
+                        .getHeight(), image.getUrl(), image.getDescriptionurl(),
+                        image.getThumburl(), image.getTitle()));
+            }
         }
+
         return allAnswers;
     }
 }

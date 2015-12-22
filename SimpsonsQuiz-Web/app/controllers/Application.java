@@ -20,6 +20,7 @@ package controllers;
 
 import models.Login;
 import models.Register;
+import models.SQuizQuestionList;
 import models.User;
 import play.Logger;
 import play.Routes;
@@ -128,6 +129,17 @@ public class Application extends Controller {
      * @return Index page
      */
     public Result logout() {
+        // delete the user's question lists from the database
+        String username = ctx().session().get("username");
+        if (username != null && !username.equals("guest")) {
+            User user = User.findByUsername(username);
+            if (user != null) {
+                String apiKey = user.apiKey;
+                SQuizQuestionList.deleteAll(apiKey);
+            }
+        }
+
+        //clear session
         session().clear();
         flash("success", Messages.get("youve.been.logged.out"));
         return GO_INDEX;
