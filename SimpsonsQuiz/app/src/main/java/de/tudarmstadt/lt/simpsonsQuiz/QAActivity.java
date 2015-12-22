@@ -27,11 +27,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import answerProcessing.EntityCollection;
 import answerProcessing.Pipeline;
@@ -40,6 +44,7 @@ import answerProcessing.types.Image;
 import answerProcessing.types.PossibleAnswer;
 import answerProcessing.types.Question;
 import answerProcessing.types.QuizAnswer;
+import backend.BackendCommunicator;
 import de.tudarmstadt.lt.simpsonsQuiz.util.TypefaceSpan;
 import imagefinder.ImageFinder;
 import jwatson.JWatson;
@@ -262,6 +267,7 @@ public class QAActivity extends Activity {
                 e.printStackTrace();
                 return null;
             }
+
             WatsonAnswer wAnswer;
             try {
                 wAnswer = watson.askQuestion(question[0]);
@@ -272,6 +278,7 @@ public class QAActivity extends Activity {
             }
 
             Question pQuestion = new Question(question[0]);
+
             try {
                 // set question type information
                 pQuestion = Pipeline.annotateQuestion(pQuestion, sqaApp.getAppProperty("REMOTE_NLP_URL"), wAnswer);
@@ -288,17 +295,22 @@ public class QAActivity extends Activity {
                         possibleAnswers.add(pAnswer);
                     }
                 }
+
                 List<QuizAnswer> result = QuizPipeline.executeQAPipeline(pQuestion, possibleAnswers, sqaApp.getAppProperty("REMOTE_NLP_URL"));
                 for (QuizAnswer answer : result) {
-
-                    boolean isEpisodeorSeason = answer.isEpisodeOrSeason();
-                    imagefinder.types.Image image = ImageFinder.findPicture(
-                            answer.getImageName(), isEpisodeorSeason, 220);
-                    answer.setImage(new Image(image.getName(), image.getWidth(), image
-                            .getHeight(), image.getUrl(), image.getDescriptionurl(),
-                            image.getThumburl(), image.getTitle()));
+                    try {
+                        boolean isEpisodeorSeason = answer.isEpisodeOrSeason();
+                        imagefinder.types.Image image = ImageFinder.findPicture(
+                                answer.getImageName(), isEpisodeorSeason, 220);
+                        answer.setImage(new Image(image.getName(), image.getWidth(), image
+                                .getHeight(), image.getUrl(), image.getDescriptionurl(),
+                                image.getThumburl(), image.getTitle()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 return result;
+
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
@@ -360,8 +372,7 @@ public class QAActivity extends Activity {
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
+                mIcon11 = readBitmap(urldisplay);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -370,21 +381,65 @@ public class QAActivity extends Activity {
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-            answerTextViewBody.setText(answer.getSentence());
-            answerTextViewHeader.setText(answer.getAnswer());
+            if (result != null)
+                bmImage.setImageBitmap(result);
         }
     }
 
     private void setTextViews(QuizAnswer answer) {
+        answerImage.setVisibility(View.GONE);
         answerTextViewHeader.setVisibility(View.VISIBLE);
-        answerImage.setVisibility(View.VISIBLE);
-        DownloadImageTask dit = new DownloadImageTask(answerImage, answer);
+
+        if (!answer.getSentence().equals(null)) {
+            answerTextViewBody.setText(answer.getSentence());
+        }
+        if (!answer.getAnswer().equals(null)) {
+            answerTextViewHeader.setText(answer.getAnswer());
+        }
         try {
-            dit.execute(answer.getImage().getThumburl());
+            if (answer.getImage() != null) {
+                DownloadImageTask dit = new DownloadImageTask(answerImage, answer);
+                dit.execute(answer.getImage().getThumburl());
+                answerImage.setVisibility(View.VISIBLE);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static Bitmap readBitmap(String requestUrl) {
+        URL url;
+        HttpURLConnection urlConnection = null;
+        Bitmap output = null;
+
+        try {
+            url = new URL(requestUrl);
+
+            if (BackendCommunicator.isUseTrustStore() && url.getProtocol().equals("https")) {
+                HttpsURLConnection sslConnection = (HttpsURLConnection) url.openConnection();
+                sslConnection.setSSLSocketFactory(BackendCommunicator.getSSLFactoryWithTrustStore());
+                urlConnection = sslConnection;
+            } else
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestMethod("GET");
+
+            int responseCode = urlConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
+                output = BitmapFactory.decodeStream(urlConnection.getInputStream());
+            }
+
+        } catch (SocketTimeoutException e) {
+            System.err.println("TIMEOUT! " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            if (urlConnection != null)
+                urlConnection.disconnect();
+        }
+
+        return output;
     }
 
 

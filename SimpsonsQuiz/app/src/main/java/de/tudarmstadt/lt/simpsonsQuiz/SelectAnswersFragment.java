@@ -349,6 +349,7 @@ public class SelectAnswersFragment extends Fragment {
                 // Ungültiger Question Type
                 UnknownQuestionTypeDialogFragment uqtdf = new UnknownQuestionTypeDialogFragment();
                 uqtdf.show(getFragmentManager(), "unknown_question_type");
+                answers.clear();
             } else {
                 for (int i = 0; i < answers.size(); i++) {
 
