@@ -102,3 +102,6 @@ After installation, you should have all the needed credentials and URLs together
 
 (More infos on Play Framework Deployment: https://www.playframework.com/documentation/latest/Production)
 
+#### Show Pictures from SimpsonsWiki
+To load and show the pictures from SimpsonsWiki you have to set `showSimpsonsPictures=true` at the end of 'SimpsonsQuiz-Web/conf/application.conf' resp. the 'application.conf' that will be used by the executable. 
+
